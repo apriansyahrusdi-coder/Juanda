@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juanda Store - Store lengkap </title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h2><i class="fas fa-store"></i> Juanda Store </h2>
+            </div>
+            <nav class="nav">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#products" class="nav-link">Produk</a>
+                <a href="#cart" class="nav-link" onclick="showCart()">Keranjang (<span id="cart-count">0</span>)</a>
+                <a href="#login" class="nav-link login-btn" onclick="showLogin()">Login</a>
+                <a href="#admin" class="nav-link admin-btn" onclick="showAdmin()">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1><i class="fas fa-shopping-cart"></i> Juanda Store</h1>
+            <p>30+ Produk Premium • Stok Real-time • Yuk Pesan </p>
+            <button class="cta-btn" onclick="scrollToProducts()">🚀 Belanja Sekarang</button>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-boxes"></i> Produk Terbaru (30+ Items)</h2>
+                <div class="product-controls">
+                    <input type="text" id="searchInput" placeholder="🔍 Cari produk... (iPhone, Laptop, dll)">
+                    <select id="categoryFilter">
+                        <option value="">📂 Semua Kategori</option>
+                        <option value="Laptop Gaming">💻 Laptop Gaming</option>
+                        <option value="Laptop Premium">💎 Laptop Premium</option>
+                        <option value="Laptop Office">💼 Laptop Office</option>
+                        <option value="Smartphone Premium">📱 Smartphone Premium</option>
+                        <option value="Smartphone">📱 Smartphone</option>
+                        <option value="Headphone">🎧 Headphone</option>
+                        <option value="Smartwatch">⌚ Smartwatch</option>
+                        <option value="Console">🎮 Console</option>
+                    </select>
+                </div>
+            </div>
+            <div class="product-grid" id="productGrid">
+                <!-- Products akan dimuat oleh JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCart()">&times;</span>
+            <h2><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h2>
+            <div id="cartItems"></div>
+            <div class="cart-total">
+                <h3>Total: Rp <span id="cartTotal">0</span></h3>
+                <button class="checkout-btn" onclick="checkout()"><i class="fas fa-credit-card"></i> Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLogin()">&times;</span>
+            <h2><i class="fas fa-user-shield"></i> Admin Login</h2>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Username: admin" required>
+                <input type="password" id="password" placeholder="Password: admin123" required>
+                <button type="submit"><i class="fas fa-sign-in-alt"></i> Login</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem; color: #666;">
+                Admin: <strong>admin</strong> / <strong>admin123</strong>
+            </p>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content" style="max-height: 85vh;">
+            <span class="close" onclick="closeAdmin()">&times;</span>
+            <h2><i class="fas fa-cogs"></i> Panel Admin</h2>
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="showTab('stock')"><i class="fas fa-boxes"></i> Stock</button>
+                <button class="tab-btn" onclick="showTab('orders')"><i class="fas fa-shopping-bag"></i> Orders</button>
+            </div>
+            
+            <!-- Stock Tab -->
+            <div id="stockTab" class="tab-content active">
+                <h3>📦 Kelola Stock Produk</h3>
+                <form id="addProductForm">
+                    <input type="text" id="productName" placeholder="Nama Produk" required>
+                    <input type="number" id="productPrice" placeholder="Harga (Rp)" required>
+                    <input type="number" id="productStock" placeholder="Stock" required>
+                    <select id="productCategory" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="Laptop Gaming">💻 Laptop Gaming</option>
+                        <option value="Laptop Premium">💎 Laptop Premium</option>
+                        <option value="Laptop Office">💼 Laptop Office</option>
+                        <option value="Smartphone Premium">📱 Smartphone Premium</option>
+                        <option value="Smartphone">📱 Smartphone</option>
+                        <option value="Smartphone Gaming">🎮 Smartphone Gaming</option>
+                        <option value="TWS">🎧 TWS</option>
+                        <option value="Headphone">🎧 Headphone</option>
+                        <option value="Smartwatch Premium">⌚ Smartwatch Premium</option>
+                        <option value="Smartwatch">⌚ Smartwatch</option>
+                        <option value="Fitness Tracker">🏃 Fitness Tracker</option>
+                        <option value="Tablet Premium">📲 Tablet Premium</option>
+                        <option value="Tablet">📲 Tablet</option>
+                        <option value="Mirrorless">📷 Mirrorless</option>
+                        <option value="Action Cam">📹 Action Cam</option>
+                        <option value="Console">🎮 Console</option>
+                        <option value="Gaming Mouse">🖱️ Gaming Mouse</option>
+                        <option value="Home Appliance">🏠 Home Appliance</option>
+                        <option value="Kitchen">🍳 Kitchen</option>
+                        <option value="Eyewear">🕶️ Eyewear</option>
+                        <option value="Charger">🔌 Charger</option>
+                        <option value="Storage">💾 Storage</option>
+                        <option value="Networking">📶 Networking</option>
+                        <option value="Powerbank">🔋 Powerbank</option>
+                        <option value="Mouse">🖱️ Mouse</option>
+                        <option value="Keyboard">⌨️ Keyboard</option>
+                    </select>
+                    <button type="submit"><i class="fas fa-plus"></i> Tambah Produk</button>
+                </form>
+                <div id="adminProducts" style="max-height: 300px; overflow-y: auto; margin-top: 2rem;"></div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div id="ordersTab" class="tab-content">
+                <h3>📋 Daftar Pesanan</h3>
+                <div id="adminOrders" style="max-height: 400px; overflow-y: auto;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Success Modal -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content success">
+            <span class="close" onclick="closeCheckout()">&times;</span>
+            <h2>✅ Pesanan Berhasil!</h2>
+            <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; margin: 1rem 0;">
+                <p><strong>ID Transaksi:</strong> <span id="transactionId"></span></p>
+                <p><strong>Total Bayar:</strong> Rp <span id="checkoutTotal"></span></p>
+                <p><strong>Tanggal:</strong> <span id="checkoutDate"></span></p>
+            </div>
+            <button class="cta-btn" onclick="closeCheckout()">🛒 Belanja Lagi</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
